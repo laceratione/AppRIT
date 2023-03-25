@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">RITApp</string>
+
+    <string name="bot_nav_action_1">Home</string>
+    <string name="bot_nav_action_2">Settings</string>
+    
+    <string name="title_settings">API</string>
+</resources>
