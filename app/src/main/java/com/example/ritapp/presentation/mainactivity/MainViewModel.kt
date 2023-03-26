@@ -12,7 +12,6 @@ import com.example.ritapp.domain.model.Countries
 import com.example.ritapp.domain.model.Dog
 import com.example.ritapp.domain.usecase.GetDataDog
 import com.example.ritapp.domain.usecase.GetDataNationality
-import com.example.ritapp.domain.usecase.GetDataNationalityMultiple
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -53,9 +52,6 @@ class MainViewModel(private val application: Application) : ViewModel() {
     @Inject
     lateinit var getDataNationality: GetDataNationality
 
-    @Inject
-    lateinit var getDataNationalityMultiple: GetDataNationalityMultiple
-
     val settingsPref = SettingsPref(application)
 
     init {
@@ -68,15 +64,9 @@ class MainViewModel(private val application: Application) : ViewModel() {
         }.start()
     }
 
-    fun loadDataNatJob() {
+    fun loadDataNatJob(names: List<String>) {
         viewModelScope.launch(Dispatchers.IO) {
-            loadDataNat()
-        }.start()
-    }
-
-    fun loadDataNatMultipleJob(names: List<String>) {
-        viewModelScope.launch(Dispatchers.IO) {
-            loadDataNatMultiple(names)
+            loadDataNat(names)
         }.start()
     }
 
@@ -94,25 +84,10 @@ class MainViewModel(private val application: Application) : ViewModel() {
         }
     }
 
-    private suspend fun loadDataNat() = coroutineScope {
-        launch {
-            getDataNationality(names).enqueue(object : Callback<Countries> {
-                override fun onResponse(call: Call<Countries>, response: Response<Countries>) {
-                    _countries.postValue(response.body())
-                }
-
-                override fun onFailure(call: Call<Countries>, t: Throwable) {
-                    Log.d("myLogs", t.message.toString())
-                }
-
-            })
-        }
-    }
-
     //запрос с некскольми именами
-    private suspend fun loadDataNatMultiple(names: List<String>) = coroutineScope {
+    private suspend fun loadDataNat(names: List<String>) = coroutineScope {
         launch {
-            getDataNationalityMultiple(names).enqueue(object : Callback<List<Countries>> {
+            getDataNationality(names).enqueue(object : Callback<List<Countries>> {
                 override fun onResponse(
                     call: Call<List<Countries>>,
                     response: Response<List<Countries>>
@@ -133,10 +108,8 @@ class MainViewModel(private val application: Application) : ViewModel() {
             0 -> loadDataDogJob()
             1-> {
                 val namesList = names.filter { !it.isWhitespace() }.split(",").toList()
-                if (namesList.size == 1)
-                    loadDataNatJob()
-                else if (namesList.size > 1)
-                    loadDataNatMultipleJob(namesList)
+                if (namesList.size > 0)
+                    loadDataNatJob(namesList)
             }
             2-> {}
         }

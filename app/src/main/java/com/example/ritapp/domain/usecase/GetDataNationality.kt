@@ -7,13 +7,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 
-class GetDataNationality(
+class GetDataNationality (
     private val cloudNatRepository: CloudNatRepository,
     private val dispatcher: CoroutineDispatcher = Dispatchers.Default
 ) {
-    suspend operator fun invoke(name: String):
-            Call<Countries> = withContext(dispatcher) {
-        val item = cloudNatRepository.getNationality(name)
+    suspend operator fun invoke(names: List<String>):
+            Call<List<Countries>> = withContext(dispatcher) {
+        val item = cloudNatRepository.getNationality(names)
         item
     }
 }

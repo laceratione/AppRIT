@@ -7,8 +7,6 @@ import retrofit2.http.Query
 
 interface RetrofitNatApi {
     @GET("/")
-    fun getNationality(@Query("name") name: String): Call<Countries>
+    fun getNationality(@Query("name[]") names: List<String>): Call<List<Countries>>
 
-    @GET("/")
-    fun getNationalityMultipleNames(@Query("name[]") names: List<String>): Call<List<Countries>>
 }

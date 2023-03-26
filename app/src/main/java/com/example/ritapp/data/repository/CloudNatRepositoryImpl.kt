@@ -6,11 +6,7 @@ import com.example.ritapp.domain.model.Countries
 import retrofit2.Call
 
 class CloudNatRepositoryImpl(private val retrofitNatApi: RetrofitNatApi): CloudNatRepository {
-    override fun getNationality(name: String): Call<Countries> {
-        return retrofitNatApi.getNationality(name)
-    }
-
-    override fun getNationalityMultipleNames(names: List<String>): Call<List<Countries>> {
-        return retrofitNatApi.getNationalityMultipleNames(names)
+    override fun getNationality(names: List<String>): Call<List<Countries>> {
+        return retrofitNatApi.getNationality(names)
     }
 }
