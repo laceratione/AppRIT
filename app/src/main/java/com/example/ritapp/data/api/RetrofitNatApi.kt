@@ -8,5 +8,4 @@ import retrofit2.http.Query
 interface RetrofitNatApi {
     @GET("/")
     fun getNationality(@Query("name[]") names: List<String>): Call<List<Countries>>
-
 }

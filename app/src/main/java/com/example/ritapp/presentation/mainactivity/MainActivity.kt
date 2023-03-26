@@ -58,14 +58,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         mainViewModel.countries.observe(this, {
-            var message: String = ""
-            for(item in it.countries){
-                message += "Страна: ${item.countryId}, вероятность: ${item.probability} \n"
-            }
-            buildDialog(message).show()
-        })
-
-        mainViewModel.countriesMultiple.observe(this, {
             val tmp: List<Countries> = it
 
             var message: String = ""

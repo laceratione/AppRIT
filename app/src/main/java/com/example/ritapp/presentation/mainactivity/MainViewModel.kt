@@ -26,11 +26,8 @@ class MainViewModel(private val application: Application) : ViewModel() {
     private val _dog = MutableLiveData<Dog>()
     val dog: LiveData<Dog> = _dog
 
-    private val _countries = MutableLiveData<Countries>()
-    val countries: LiveData<Countries> = _countries
-
-    private val _countriesMultiple = MutableLiveData<List<Countries>>()
-    val countriesMultiple: LiveData<List<Countries>> = _countriesMultiple
+    private val _countries = MutableLiveData<List<Countries>>()
+    val countries: LiveData<List<Countries>> = _countries
 
     private val botNavPage: MutableLiveData<Int> = MutableLiveData()
     val botNavPageLive: LiveData<Int> = botNavPage
@@ -92,7 +89,7 @@ class MainViewModel(private val application: Application) : ViewModel() {
                     call: Call<List<Countries>>,
                     response: Response<List<Countries>>
                 ) {
-                    _countriesMultiple.postValue(response.body())
+                    _countries.postValue(response.body())
                 }
 
                 override fun onFailure(call: Call<List<Countries>>, t: Throwable) {

@@ -18,5 +18,4 @@ class UseCaseModule {
     fun provideGetDataNationality(cloudNatRepository: CloudNatRepository): GetDataNationality {
         return GetDataNationality(cloudNatRepository)
     }
-
 }
